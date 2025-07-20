@@ -51,7 +51,7 @@ function startGame() {
     playLocked = false;
     playBtn.disabled = false;
     playBtn.style.backgroundColor = ''; // вернуть стиль кнопки по умолчанию
-  }, 7000);
+  }, 5000);
 }
 
 function generateTraps(size, count) {
