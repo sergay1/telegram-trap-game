@@ -3,61 +3,34 @@ let traps = 3;
 let trapPositions = [];
 const allowedTraps = [1, 3, 5, 7];
 
-// Убираем блокировку
-// let playLocked = false;
-
 function changeTraps(delta) {
-  const currentIndex = allowedTraps.indexOf(traps);
-  let newIndex = currentIndex + delta;
-
-  if (newIndex >= allowedTraps.length) newIndex = 0;
-  if (newIndex < 0) newIndex = allowedTraps.length - 1;
-
-  traps = allowedTraps[newIndex];
+  const idx = allowedTraps.indexOf(traps) + delta;
+  traps = allowedTraps[(idx + allowedTraps.length) % allowedTraps.length];
   document.getElementById('trapCount').innerText = traps;
 }
 
 function startGame() {
-  // Убираем проверку блокировки и alert
-
-  const playBtn = document.querySelector('.play');
-  playBtn.style.backgroundColor = ''; // гарантируем нормальный цвет
-  playBtn.style.cursor = 'pointer';   // нормальный курсор
-
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
   trapPositions = generateTraps(gridSize, traps);
 
   for (let i = 0; i < gridSize * gridSize; i++) {
     const cell = document.createElement('div');
-    cell.classList.add('cell');
-    cell.dataset.index = i;
-
-    if (trapPositions.includes(i)) {
-      cell.innerHTML = '❌';
-      cell.classList.add('trap');
-    } else {
-      cell.innerHTML = '⭐';
-      cell.classList.add('safe');
-    }
-
+    cell.className = 'cell';
+    cell.innerText = trapPositions.includes(i) ? '❌' : '⭐';
+    cell.classList.add(trapPositions.includes(i) ? 'trap' : 'safe');
     grid.appendChild(cell);
   }
 }
 
 function generateTraps(size, count) {
-  const total = size * size;
   const positions = new Set();
   while (positions.size < count) {
-    positions.add(Math.floor(Math.random() * total));
+    positions.add(Math.floor(Math.random() * size * size));
   }
   return Array.from(positions);
 }
 
 function goBack() {
-  if (window.Telegram && Telegram.WebApp && Telegram.WebApp.close) {
-    Telegram.WebApp.close();
-  } else {
-    alert('Закрыть приложение можно только внутри Telegram');
-  }
+  if (window.Telegram?.WebApp?.close) Telegram.WebApp.close();
 }
