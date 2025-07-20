@@ -1,7 +1,7 @@
 const gridSize = 5;
 let traps = 3;
 let trapPositions = [];
-const allowedTraps = [1, 3, 5, 7];
+const allowedTraps = [1,3,5,7];
 
 function changeTraps(delta) {
   const idx = allowedTraps.indexOf(traps) + delta;
@@ -13,7 +13,6 @@ function startGame() {
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
   trapPositions = generateTraps(gridSize, traps);
-
   for (let i = 0; i < gridSize * gridSize; i++) {
     const cell = document.createElement('div');
     cell.className = 'cell';
@@ -25,9 +24,7 @@ function startGame() {
 
 function generateTraps(size, count) {
   const positions = new Set();
-  while (positions.size < count) {
-    positions.add(Math.floor(Math.random() * size * size));
-  }
+  while (positions.size < count) positions.add(Math.floor(Math.random() * size*size));
   return Array.from(positions);
 }
 
