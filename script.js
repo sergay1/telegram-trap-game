@@ -24,8 +24,8 @@ function startGame() {
 
   playLocked = true;
   const playBtn = document.querySelector('.play');
-  playBtn.disabled = true;
   playBtn.style.backgroundColor = '#555'; // темный цвет
+  playBtn.style.cursor = 'not-allowed';   // курсор неактивный
 
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
@@ -49,8 +49,8 @@ function startGame() {
 
   setTimeout(() => {
     playLocked = false;
-    playBtn.disabled = false;
-    playBtn.style.backgroundColor = ''; // вернуть стиль кнопки по умолчанию
+    playBtn.style.backgroundColor = ''; // вернуть цвет кнопки
+    playBtn.style.cursor = 'pointer';   // вернуть курсор
   }, 5000);
 }
 
