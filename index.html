@@ -10,12 +10,12 @@
   <div class="container">
     <div class="controls">
       <div class="trap-counter">
-        <button onclick="changeTraps(-1)">←</button>
+        <button ontouchend="changeTraps(-1)" onclick="changeTraps(-1)">←</button>
         <span id="trapCount">3</span> traps
-        <button onclick="changeTraps(1)">→</button>
+        <button ontouchend="changeTraps(1)" onclick="changeTraps(1)">→</button>
       </div>
-      <button class="play" onclick="startGame()">Play</button>
-      <button class="back" onclick="goBack()">Back</button>
+      <button class="play" ontouchend="startGame()" onclick="startGame()">Play</button>
+      <button class="back" ontouchend="goBack()" onclick="goBack()">Back</button>
     </div>
     <div id="grid"></div>
   </div>
