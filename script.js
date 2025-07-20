@@ -19,13 +19,13 @@ function changeTraps(delta) {
 function startGame() {
   if (playLocked) {
     alert('Слишком часто, пожалуйста подождите');
-    return;
+    return; // выходим, чтобы не запускать игру и не открывать ссылку
   }
 
   playLocked = true;
   const playBtn = document.querySelector('.play');
-  playBtn.style.backgroundColor = '#555'; // темный цвет
-  playBtn.style.cursor = 'not-allowed';   // курсор неактивный
+  playBtn.style.backgroundColor = '#555'; // делаем кнопку темной
+  playBtn.style.cursor = 'not-allowed';   // меняем курсор
 
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
@@ -49,24 +49,5 @@ function startGame() {
 
   setTimeout(() => {
     playLocked = false;
-    playBtn.style.backgroundColor = ''; // вернуть цвет кнопки
-    playBtn.style.cursor = 'pointer';   // вернуть курсор
-  }, 5000);
-}
-
-function generateTraps(size, count) {
-  const total = size * size;
-  const positions = new Set();
-  while (positions.size < count) {
-    positions.add(Math.floor(Math.random() * total));
-  }
-  return Array.from(positions);
-}
-
-function goBack() {
-  if (window.Telegram && Telegram.WebApp && Telegram.WebApp.close) {
-    Telegram.WebApp.close();
-  } else {
-    alert('Закрыть приложение можно только внутри Telegram');
-  }
-}
+    playBtn.style.backgroundColor = ''; // возвращаем цвет кнопки
+    playBtn.style.cursor
