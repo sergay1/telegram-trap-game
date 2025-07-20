@@ -3,6 +3,8 @@ let traps = 3;
 let trapPositions = [];
 const allowedTraps = [1, 3, 5, 7];
 
+let playLocked = false;
+
 function changeTraps(delta) {
   const currentIndex = allowedTraps.indexOf(traps);
   let newIndex = currentIndex + delta;
@@ -15,6 +17,16 @@ function changeTraps(delta) {
 }
 
 function startGame() {
+  if (playLocked) {
+    alert('Слишком часто, пожалуйста подождите');
+    return;
+  }
+
+  playLocked = true;
+  const playBtn = document.querySelector('.play');
+  playBtn.disabled = true;
+  playBtn.style.backgroundColor = '#555'; // темный цвет
+
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
   trapPositions = generateTraps(gridSize, traps);
@@ -34,6 +46,12 @@ function startGame() {
 
     grid.appendChild(cell);
   }
+
+  setTimeout(() => {
+    playLocked = false;
+    playBtn.disabled = false;
+    playBtn.style.backgroundColor = ''; // вернуть стиль кнопки по умолчанию
+  }, 7000);
 }
 
 function generateTraps(size, count) {
