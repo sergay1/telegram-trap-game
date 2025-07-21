@@ -1,11 +1,17 @@
 const gridSize = 5;
 let traps = 3;
 let trapPositions = [];
-const allowedTraps = [1, 3, 5, 7];  // ⚠️ Здесь обязательно все четыре значения
+const allowedTraps = [1, 3, 5, 7];
 
 function changeTraps(delta) {
-  const idx = allowedTraps.indexOf(traps) + delta;
-  traps = allowedTraps[(idx + allowedTraps.length) % allowedTraps.length];
+  const currentIndex = allowedTraps.indexOf(traps);
+  let newIndex = currentIndex + delta;
+
+  // Зацикливание по массиву
+  if (newIndex >= allowedTraps.length) newIndex = 0;
+  if (newIndex < 0) newIndex = allowedTraps.length - 1;
+
+  traps = allowedTraps[newIndex];
   document.getElementById('trapCount').innerText = traps;
 }
 
@@ -16,22 +22,30 @@ function startGame() {
 
   for (let i = 0; i < gridSize * gridSize; i++) {
     const cell = document.createElement('div');
-    cell.className = 'cell';
-    const isTrap = trapPositions.includes(i);
-    cell.innerText = isTrap ? '❌' : '⭐';
-    cell.classList.add(isTrap ? 'trap' : 'safe');
+    cell.classList.add('cell');
+    cell.dataset.index = i;
+
+    if (trapPositions.includes(i)) {
+      cell.innerHTML = '❌';
+      cell.classList.add('trap');
+    } else {
+      cell.innerHTML = '⭐';
+      cell.classList.add('safe');
+    }
+
     grid.appendChild(cell);
   }
 }
 
 function generateTraps(size, count) {
+  const total = size * size;
   const positions = new Set();
   while (positions.size < count) {
-    positions.add(Math.floor(Math.random() * (size * size)));
+    positions.add(Math.floor(Math.random() * total));
   }
   return Array.from(positions);
 }
 
 function goBack() {
-  if (window.Telegram?.WebApp?.close) Telegram.WebApp.close();
+  Telegram.WebApp.close();
 }
